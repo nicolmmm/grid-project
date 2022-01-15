@@ -1,24 +1,63 @@
 //array of colours I want to iterate through each time I mouseover a div
-var arrayOfColours = ["green", "pink", "black", "purple", "yellow", "orange"];
 
-var a = 0;
+randomThreeDigits = () => {
+  return Math.floor(Math.random() * (999 - 100 + 1) + 1);
+};
 
-//trying to loop my array index
+randomRGB = () => {
+  var randomRGB =
+    "rgb(" +
+    randomThreeDigits() +
+    "," +
+    randomThreeDigits() +
+    "," +
+    randomThreeDigits() +
+    ")";
+
+  return randomRGB;
+};
+
+var arrayOfColours = [];
+
+let a = 0;
+
+//loop my array index
 arrayNumber = () => {
-  if (a < arrayOfColours.length - 1) {
-    return a + 1;
-  } else {
+  if (a == arrayOfColours.length - 1) {
     return (a = 0);
+  } else {
+    a++;
+    return a;
   }
 };
 
 var thisSquare = document.querySelectorAll(".gridSquare");
 
+var toggleSwitch = true;
+
+toggleSwitchFunc = () => {
+  toggleSwitch = !toggleSwitch;
+};
+
 for (let index = 0; index < thisSquare.length; index++) {
   const element = thisSquare[index];
   element.addEventListener(
     "mouseover",
-    (/* alternatively "arrayNumber()" once I get it working */) =>
-      (element.style.backgroundColor = arrayOfColours[4])
+    /*  () => (element.style.backgroundColor = randomRGB())
+  ); */
+    () => {
+      if (toggleSwitch == true) {
+        element.style.backgroundColor = arrayOfColours[arrayNumber()];
+      } else {
+        element.style.backgroundColor = randomRGB();
+      }
+    }
   );
 }
+var input = document.querySelector("input");
+var button = document.querySelector("#button");
+var togglebutton = document.querySelector("#toggle");
+
+button.addEventListener("click", () => arrayOfColours.push(input.value));
+button.addEventListener("click", () => (input.value = ""));
+togglebutton.addEventListener("click", toggleSwitchFunc);
